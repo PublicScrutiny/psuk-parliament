@@ -1,5 +1,11 @@
-psuk-parliament - The PublicScrutiny.UK Parliament API
+The PublicScrutiny.UK Parliament API
 ===
+
+A module to fetch information about Bills before the UK Parliament from the offical Parliament website in a programmatic and simple way.
+
+You don't need an API key to access this and there is noticeable rate limiting, but it's a good idea to cache your responses for performance reasons.
+
+If you are not using node.js note that there are also public rest API's provided at http://public-scrutiny-office.org/api-documentation (which is powered by similar, but older code).
 
 # About
 
@@ -43,9 +49,9 @@ The `bills` response is an array of objects like this:
 
 ## Get full information for single Bill
 
-Requesting full information for a single Bill returns additional properties, including the sponsors of the bill, the URL for resources associated with a Bill (Explanatory Notes, Amendments, old versions, etc.) and the full text of the Bill in HTML and Text.
+Requesting full information for a single Bill returns additional properties on the bill object, including the sponsors of the bill, the URL for resources associated with a Bill (Explanatory Notes, Amendments, old versions, etc.) and the full text of the Bill in HTML and Text.
 
-Note: This method can slow to return, as sometimes it involves parsing over many pages to collect all the information about the Bill.
+Note: This method can slow to return, as sometimes it involves parsing over many pages to pull together all the information about the Bill.
 
 ``` javascript
 var parliament = require('psuk-parliament');
@@ -61,7 +67,7 @@ parliament.bills.getBills()
 });
 ```
 
-The `bills` response is an array of objects like this:
+The `bill` response is an object like this:
 
 ``` json
 { id: 'f42a76041c3cfe4d017efdfa24dd1a296d2e363a',
@@ -85,7 +91,7 @@ The `bills` response is an array of objects like this:
 
 It's possible to fetch information about all Bills in full in a single command.
 
-This can take 60 seconds or more to complete as it involves parsing hundreds of pages (although this is done in parallel!).
+This can take 60 seconds or more to complete as it involves parsing hundreds of pages (although this is done in parallel).
 
 ``` javascript
 var parliament = require('psuk-parliament');
