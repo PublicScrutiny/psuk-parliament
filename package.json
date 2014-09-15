@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/publicscrutiny/psuk-parliament.git"
+    "url": "git://github.com/PublicScrutiny/psuk-parliament.git"
   },
   "devDependencies": {
     "mocha": "^1.21.4"
