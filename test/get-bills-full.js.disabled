@@ -1,0 +1,110 @@
+/**
+ * Fetching all currently published bills in full takes around a minute or so.
+ * As a result, it's not part of the main test suite.
+ * The getFullBill() method is tested discreetly in the get-bill test.
+ */
+
+var assert = require("assert");
+var util = require("util");
+var parliamentApi = require(__dirname+'/../index');
+
+describe('List of bills in full', function() {
+    this.timeout(1200000);
+    var testData = {};
+    
+    before(function(done){
+        parliamentApi.bills.getBillsFull()
+        .then(function(bills) {
+            testData = bills;
+            done();
+        });
+    });
+
+    it('should return an array of bills', function() {
+        assert.equal((testData instanceof Array), true);
+    });
+
+    it('should return a non zero number of bills', function() {
+        assert.equal((testData.length > 0), true, "No bills returned.");
+    });
+
+    it('should return valid properties for all bills', function() {
+        // Not all Bills will have extended properties but at least some should
+        var sponsorsPopulated = false;
+        var pagesPopulated = false;
+        var documentsPopulated = false;
+        var htmlPopulated = false;
+        var textPopulated = false;
+        for (var i = 0; i < testData.length; i++) {
+            assert.strictEqual((typeof testData[i].id), 'string', "Bill ID not a string");
+            assert.strictEqual((testData[i].id.length > 0), true, "Bill ID empty");
+            
+            assert.strictEqual((typeof testData[i].name), 'string', "Bill name not a string");
+            assert.strictEqual((testData[i].name.length > 0), true, "Bill name empty");
+            
+            assert.strictEqual((typeof testData[i].description), 'string', "Bill description not a string");
+            assert.strictEqual((testData[i].description.length > 0), true, "Bill description empty");
+            
+            assert.strictEqual((typeof testData[i].slug), 'string', "Bill slug not a string");
+            assert.strictEqual((testData[i].slug.length > 0), true, "Bill slug empty");
+            
+            assert.strictEqual((typeof testData[i].session), 'string', "Bill session not a string");
+            assert.strictEqual((testData[i].session.length > 0), true, "Bill session empty");
+            
+            assert.strictEqual((typeof testData[i].stage), 'string', "Bill stage not a string");
+            assert.strictEqual((testData[i].stage.length > 0), true, "Bill stage empty");
+
+            assert.strictEqual((testData[i].type instanceof Array), true, "Bill type not an array");
+            assert.strictEqual((testData[i].type.length > 0), true, "Bill type empty");
+            
+            assert.strictEqual((typeof testData[i].url), 'string', "Bill URL not a string");
+            assert.strictEqual((testData[i].url.length > 0), true, "Bill URL empty");
+
+            assert.strictEqual((testData[i].sponsors instanceof Array), true, "Bill sponsors not an array");
+            if ((testData[i].sponsors instanceof Array) && testData[i].sponsors.length > 0)
+                sponsorsPopulated = true;
+                
+            assert.strictEqual((testData[i].pages instanceof Array), true, "Bill pages not an array");
+            if ((testData[i].pages instanceof Array) && testData[i].pages.length > 0)
+                pagesPopulated = true;
+
+            assert.strictEqual((testData[i].documents instanceof Array), true, "Bill documents not an array");
+            if ((testData[i].documents instanceof Array) && testData[i].documents.length > 0)
+                documentsPopulated = true;
+
+            if ((typeof testData[i].html === 'string') && testData[i].html.length > 0)
+                htmlPopulated = true;
+
+            if ((typeof testData[i].text === 'string') && testData[i].text.length > 0)
+                textPopulated = true;
+        }
+
+        assert.strictEqual(sponsorsPopulated, true, "At least one Bill should have a sponsor");
+        assert.strictEqual(pagesPopulated, true, "At least one Bill should have a list of pages associated with it");
+        assert.strictEqual(documentsPopulated, true, "At least one Bill should have a list of documents associated with it");
+        assert.strictEqual(htmlPopulated, true, "At least one Bill should have full Bill text in HTML");
+        assert.strictEqual(textPopulated, true, "At least one Bill should have full Bill text");
+    });
+});
+
+// This is a simple test just to check the callback option works
+describe('List of bills in full as a callback', function() {
+    this.timeout(1200000);
+    var testData = {};
+    
+    before(function(done){
+        parliamentApi.bills.getBillsFull(function(bills) {
+            testData = bills;
+            done();
+        });
+    });
+
+    it('should return an array of bills', function() {
+        assert.equal((testData instanceof Array), true);
+    });
+
+    it('should return a non zero number of bills', function() {
+        assert.equal((testData.length > 0), true, "No bills returned.");
+    });
+
+});

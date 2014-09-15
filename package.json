@@ -1,0 +1,29 @@
+{
+  "name": "psuk-parliament",
+  "version": "1.0.0",
+  "description": "A library by PublicScrutiny.UK to make it easier to get information from the UK Parliament",
+  "main": "index.js",
+  "dependencies": {
+    "cheerio": "^0.17.0",
+    "q": "^1.0.1",
+    "request": "^2.42.0",
+    "xml2js": "^0.4.4"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/publicscrutiny/psuk-parliament.git"
+  },
+  "devDependencies": {
+    "mocha": "^1.21.4"
+  },
+  "scripts": {
+    "test": "mocha test/*.js"
+  },
+  "keywords": [
+    "UK",
+    "Parliament",
+    "API"
+  ],
+  "author": "feedback@publicscrutiny.uk",
+  "license": "ISC"
+}
