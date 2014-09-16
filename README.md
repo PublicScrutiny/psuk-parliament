@@ -1,25 +1,21 @@
-The PublicScrutiny.UK Parliament API
-===
+#PublicScrutiny.UK Parliament API
+---
 
-A module to fetch information about Bills before the UK Parliament from the offical Parliament website in a programmatic and simple way.
+[![NPM version](https://badge.fury.io/js/psuk-parliament.svg)](http://badge.fury.io/js/psuk-parliament) [![Build Status](https://travis-ci.org/PublicScrutiny/psuk-parliament.svg?branch=master)](https://travis-ci.org/PublicScrutiny/psuk-parliament)
+
+## About this module
+
+This is a module to fetch information about Bills before the UK Parliament from the offical Parliament website in a programmatic and simple way.
 
 You don't need an API key to access this and there is noticeable rate limiting, but it's a good idea to cache your responses for performance reasons.
 
 If you are not using node.js note that there are also public rest API's provided at http://public-scrutiny-office.org/api-documentation (which is powered by similar, but older code).
 
-# About
+Additional information about this library is provided at the end of this README.
 
-This is a port of software origionally written for the Public Scrutiny Office site at http://public-scrutiny-office.org
+## Examples
 
-The intention in porting the existing software to a module is to review and refactor the case to add tests and in doing so improve the functionality, make it more useful to more people and to make the code easier to maintain and contribute to.
-
-Ultimately the code on the Public Scrutiny Office site will be deprecated in favour of libraries provided on http://publicscrutiny.uk
-
-The initial implimentation of this library is to provide a consistent wrapper for the varoious APIs and data that be scraped from the parliament.uk site.
-
-# Usage
-
-## Get all Bills currently before Parliament
+### Get all Bills currently before Parliament
 
 Getting a list of summary information about all Bills before Parliament is quick and easy.
 
@@ -47,7 +43,7 @@ The `bills` response is an array of objects like this:
   url: 'http://services.parliament.uk/bills/2014-15/modernslavery.html' }
 ````
 
-## Get full information for single Bill
+### Get full information for single Bill
 
 Requesting full information for a single Bill returns additional properties on the bill object, including the sponsors of the bill, the URL for resources associated with a Bill (Explanatory Notes, Amendments, old versions, etc.) and the full text of the Bill in HTML and Text.
 
@@ -87,7 +83,7 @@ The `bill` response is an object like this:
   text: 'Equality Act 2010 (Amendment) Bill\n\nEXPLANATORY NOTES\n Explanatory notes to the Bill, prepared by the [Name to be replaced], are published separately as ...\n EUROPEAN CONVENTION ON HUMAN RIGHTS\n [Name to be replaced] has made the following statement under section 19(1)(a) of the Human Rights Act 1998 ...' }
 ````
 
-## Get full information for all Bills before Parliament
+### Get full information for all Bills before Parliament
 
 It's possible to fetch information about all Bills in full in a single command.
 
@@ -104,9 +100,9 @@ parliament.bills.getBillsFull()
 });
 ```
 
-## Support for callbacks
+### Callback support
 
-The library uses promises, but support for callbacks is provided.
+The library uses promises internally (and in the examples above), but support for callbacks is also provided by passing a.
 
 You can call getBills() and getBillsFull() using callbacks by passing a function just as you'd expect in the example below:
 
@@ -120,7 +116,17 @@ parliament.bills.getBills(function(bills) {
 });
 ```
 
-# Contributing
+## More information
+
+This is a port of software origionally written for the Public Scrutiny Office site at http://public-scrutiny-office.org
+
+The intention in porting the existing software to a module is to review and refactor the case to add tests and in doing so improve the functionality, make it more useful to more people and to make the code easier to maintain and contribute to.
+
+Ultimately the code on the Public Scrutiny Office site will be deprecated in favour of libraries provided on http://publicscrutiny.uk
+
+The initial implimentation of this library is to provide a consistent wrapper for the varoious APIs and data that be scraped from the parliament.uk site.
+
+## Contributing
 
 Contributions (pull requests, bug reports, ideas, donations) are most welcome.
 
