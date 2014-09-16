@@ -59,7 +59,7 @@ parliament.bills.getBills()
     var bill = bills[0];
     bill.getFullBill()
     .then(function(bill) {
-        console.log( util.inspect( bill ) );
+        console.log(bill.name);
     });
 });
 ```
