@@ -1,7 +1,8 @@
 #PublicScrutiny.UK Parliament API
----
 
 [![NPM version](https://badge.fury.io/js/psuk-parliament.svg)](http://badge.fury.io/js/psuk-parliament) [![Build Status](https://travis-ci.org/PublicScrutiny/psuk-parliament.svg?branch=master)](https://travis-ci.org/PublicScrutiny/psuk-parliament)
+
+---
 
 ## About this module
 
@@ -13,7 +14,7 @@ If you are not using node.js note that there are also public rest API's provided
 
 Additional information about this library is provided at the end of this README.
 
-## Examples
+## Example usage
 
 ### Get all Bills currently before Parliament
 
