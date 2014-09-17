@@ -16,7 +16,7 @@ Additional information about this library is provided at the end of this README.
 
 ## Example usage
 
-### Get all Bills currently before Parliament
+### Get a list of all Bills currently before Parliament
 
 Getting a list of summary information about all Bills before Parliament is quick and easy.
 
@@ -25,7 +25,7 @@ var parliament = require('psuk-parliament');
 
 parliament.bills.getBills()
 .then(function(bills) {
-    bills.forEach(function(bill, index, array) {
+    bills.forEach(function(bill) {
        console.log(bill.name);
     });
 });
@@ -44,18 +44,18 @@ The `bills` response is an array of objects like this:
   url: 'http://services.parliament.uk/bills/2014-15/modernslavery.html' }
 ````
 
-### Get full information for single Bill
+### Get all the information about a Bill
 
-Requesting full information for a single Bill returns additional properties on the bill object, including the sponsors of the bill, the URL for resources associated with a Bill (Explanatory Notes, Amendments, old versions, etc.) and the full text of the Bill in HTML and Text.
+Requesting full information for a single Bill returns additional properties on the `bill` object, including the sponsors of the Bill, the URL for resources associated with the Bill (Explanatory Notes, Amendments, old versions, etc.) and the full text of the Bill in HTML and plain text.
 
-Note: This method can slow to return, as sometimes it involves parsing over many pages to pull together all the information about the Bill.
+This method can be slow to return, as sometimes it involves parsing over multiple pages to pull together all the information about the Bill.
 
 ``` javascript
 var parliament = require('psuk-parliament');
 
 parliament.bills.getBills()
 .then(function(bills) {
-    // Get full data for a single Bill (slow)
+    // Get full data for the first Bill in the 'bills' array
     var bill = bills[0];
     bill.getFullBill()
     .then(function(bill) {
@@ -64,7 +64,7 @@ parliament.bills.getBills()
 });
 ```
 
-The `bill` response is an object like this:
+The `bill` object returned looks like this:
 
 ``` json
 { id: 'f42a76041c3cfe4d017efdfa24dd1a296d2e363a',
@@ -84,11 +84,11 @@ The `bill` response is an object like this:
   text: 'Equality Act 2010 (Amendment) Bill\n\nEXPLANATORY NOTES\n Explanatory notes to the Bill, prepared by the [Name to be replaced], are published separately as ...\n EUROPEAN CONVENTION ON HUMAN RIGHTS\n [Name to be replaced] has made the following statement under section 19(1)(a) of the Human Rights Act 1998 ...' }
 ````
 
-### Get full information for all Bills before Parliament
+### Get all the information about all Bills
 
 It's possible to fetch information about all Bills in full in a single command.
 
-This can take 60 seconds or more to complete as it involves parsing hundreds of pages (although this is done in parallel).
+This can take 60 seconds or more to complete as it involves parsing hundreds of pages (although this is done in parallel is can still be slow as some Bills are made up of as many as 200 pages).
 
 ``` javascript
 var parliament = require('psuk-parliament');
@@ -96,30 +96,32 @@ var parliament = require('psuk-parliament');
 parliament.bills.getBillsFull()
 .then(function(bills) {
     bills.forEach(function(bill, index, array) {
-       console.log(bill.name);
+        console.log(bill.name);
     });
 });
 ```
 
-### Callback support
+### Support for callbacks instead of promises
 
-The library uses promises internally (and in the examples above), but support for callbacks is also provided by passing a.
+The library uses promises internally (and in the examples above), but support for callbacks is also provided.
 
-You can call getBills() and getBillsFull() using callbacks by passing a function just as you'd expect in the example below:
+You can invoke `getBills()` and `getBillsFull()` (or `.getFullBill()` on a `bill` object) using callbacks by passing a function just as you'd expect in the example below:
 
 ``` javascript
 var parliament = require('psuk-parliament');
 
 parliament.bills.getBills(function(bills) {
-    bills.forEach(function(bill, index, array) {
-       console.log(bill.name);
+    bills.forEach(function(bill) {
+        bill.getFullBill(function(bill) {
+            console.log(bill.name);
+        });
     });
 });
 ```
 
 ## More information
 
-This is a port of software origionally written for the Public Scrutiny Office site at http://public-scrutiny-office.org
+This is a cleanup and port of software origionally written for the Public Scrutiny Office site at http://public-scrutiny-office.org
 
 The intention in porting the existing software to a module is to review and refactor the case to add tests and in doing so improve the functionality, make it more useful to more people and to make the code easier to maintain and contribute to.
 
@@ -131,4 +133,6 @@ The initial implimentation of this library is to provide a consistent wrapper fo
 
 Contributions (pull requests, bug reports, ideas, donations) are most welcome.
 
-When submitting pull requests please add tests for any new functionality you add. You can run the tests with the `npm test` command.
+When submitting pull requests please add tests for any new functionality you add. 
+
+You can run the tests with the `npm test` command.
