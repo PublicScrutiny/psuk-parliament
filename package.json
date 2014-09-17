@@ -1,6 +1,6 @@
 {
   "name": "psuk-parliament",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "A library by PublicScrutiny.UK to make it easier to get information from the UK Parliament",
   "main": "index.js",
   "dependencies": {
