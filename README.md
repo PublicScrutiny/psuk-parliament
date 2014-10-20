@@ -8,9 +8,9 @@
 
 This is a module to fetch information about Bills before the UK Parliament from the offical Parliament website in a programmatic and simple way.
 
-You don't need an API key to access this and there is noticeable rate limiting, but it's a good idea to cache your responses for performance reasons.
+You don't need an API key to access this and while there is no noticeable rate limiting it's a good idea to cache your responses for performance reasons.
 
-If you are not using node.js note that there are also public rest API's provided at http://public-scrutiny-office.org/api-documentation (which is powered by similar, but older code).
+Note: If you are not using node.js note that there are also public rest API's provided at http://public-scrutiny-office.org/api-documentation (which is powered by similar, but older code).
 
 Additional information about this library is provided at the end of this README.
 
